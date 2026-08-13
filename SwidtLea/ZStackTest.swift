@@ -124,7 +124,7 @@ struct OauthBox: View {
                     .foregroundStyle(.gray)
                     .padding(.top, 10)
                 HStack(spacing: 16){
-                    QnButton(iconName: "arrowshape.backward", title: "返回", loading: loading) {
+                    QnButton(iconName: "paperplane", title: "确认", loading: loading) {
                         withAnimation {
                             loading = true
                         }
@@ -134,7 +134,7 @@ struct OauthBox: View {
                             }
                         }
                     }
-                    QnButton(title: "回到 Game",loading: loading, type: .primary) {
+                    QnButton(title: "回首页", type: .primary) {
                         print("hello")
                         router.popRoot()
                     }
