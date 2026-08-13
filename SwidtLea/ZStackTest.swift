@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+// 自定义按钮 开始
 struct QnButton: View {
     // MARK: - 枚举
     enum ButtonType {
@@ -43,8 +44,9 @@ struct QnButton: View {
     // MARK: - 属性
     let iconName: String?
     let title: String
-    let loading: Bool?
+    let loading: Bool
     let type: ButtonType
+    let cornerRadius: CGFloat
     let action: () -> Void
     
     // MARK: - 初始化
@@ -53,12 +55,14 @@ struct QnButton: View {
         title: String,
         loading: Bool = false,
         type: ButtonType = .default,
+        cornerRadius: CGFloat = 8,
         action: @escaping () -> Void
     ) {
         self.iconName = iconName
         self.title = title
         self.loading = loading
         self.type = type
+        self.cornerRadius = cornerRadius
         self.action = action
     }
     
@@ -80,25 +84,26 @@ struct QnButton: View {
                 Text(title)
                     .font(.body)
             }
-            
             .foregroundStyle(type.textColor)
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
-            .frame(minHeight: 44)
+            .frame(minHeight: 48)
             .frame(maxWidth: .infinity)
             .background(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(type.backgroundColor)
                     .stroke(type.borderColor, lineWidth: 1)
             )
-            .contentShape(RoundedRectangle(cornerRadius: 8))
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius))
             .opacity(loading == true ? 0.8 : 1.0)
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(loading == true)
-        
     }
 }
+// 自定义按钮 结束
+
+
 struct OauthBox: View {
     @State private var loading = false
     @EnvironmentObject var router: Router
