@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		C33158B5302D3EE2003C7993 /* SwidtLea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwidtLea.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C33158B5302D3EE2003C7993 /* SwiftNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		C33158B6302D3EE2003C7993 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C33158B5302D3EE2003C7993 /* SwidtLea.app */,
+				C33158B5302D3EE2003C7993 /* SwiftNew.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C33158B4302D3EE2003C7993 /* SwidtLea */ = {
+		C33158B4302D3EE2003C7993 /* SwiftNew */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C33158C4302D3EE3003C7993 /* Build configuration list for PBXNativeTarget "SwidtLea" */;
+			buildConfigurationList = C33158C4302D3EE3003C7993 /* Build configuration list for PBXNativeTarget "SwiftNew" */;
 			buildPhases = (
 				C33158B1302D3EE2003C7993 /* Sources */,
 				C33158B2302D3EE2003C7993 /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				C33158B7302D3EE2003C7993 /* SwidtLea */,
 			);
-			name = SwidtLea;
+			name = SwiftNew;
 			packageProductDependencies = (
 			);
 			productName = SwidtLea;
-			productReference = C33158B5302D3EE2003C7993 /* SwidtLea.app */;
+			productReference = C33158B5302D3EE2003C7993 /* SwiftNew.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C33158B0302D3EE2003C7993 /* Build configuration list for PBXProject "SwidtLea" */;
+			buildConfigurationList = C33158B0302D3EE2003C7993 /* Build configuration list for PBXProject "SwiftNew" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C33158B4302D3EE2003C7993 /* SwidtLea */,
+				C33158B4302D3EE2003C7993 /* SwiftNew */,
 			);
 		};
 /* End PBXProject section */
@@ -320,7 +320,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C33158B0302D3EE2003C7993 /* Build configuration list for PBXProject "SwidtLea" */ = {
+		C33158B0302D3EE2003C7993 /* Build configuration list for PBXProject "SwiftNew" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C33158C2302D3EE3003C7993 /* Debug */,
@@ -329,7 +329,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C33158C4302D3EE3003C7993 /* Build configuration list for PBXNativeTarget "SwidtLea" */ = {
+		C33158C4302D3EE3003C7993 /* Build configuration list for PBXNativeTarget "SwiftNew" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C33158C5302D3EE3003C7993 /* Debug */,
