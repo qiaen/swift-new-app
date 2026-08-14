@@ -27,15 +27,16 @@ class AuthService {
         let request = LoginRequest(username: username, password: password)
         network.post(
             path: NetworkConstants.APIPath.login,
-            parameters: request.toDictionary(),
+            parameters: request,
             responseType: LoginData.self
         ) { result in
             switch result {
                 case .success(let response):
-                    if response.result, let data = response.data {
+                    // 网络层已保证 result == true 才走 success
+                    if let data = response.data {
                         // ⭐ 登录成功后保存 Token
                         NetworkManager.shared.setAuthToken(data.accessToken)
-                        print("✅ Token 已保存: \(data.accessToken)")
+                        print("✅ Token 已保存: \(data.accessToken.prefix(12))...")
                     }
                     completion(.success(response))
                 case .failure(let error):

@@ -28,14 +28,9 @@ class HomeService {
         pageSize: Int = 20,
         completion: @escaping (Result<BaseResponse<RewardsData>, NetworkError>) -> Void
     ) {
-        let parameters: [String: Any] = [
-            "rewardStatus": "paid",
-            "pageNo": pageNo,
-            "pageSize": pageSize
-        ]
         network.get(
             path: NetworkConstants.APIPath.myRewards,
-            parameters: parameters,
+            parameters: MyRewardsRequest(pageNo: pageNo, pageSize: pageSize),
             responseType: RewardsData.self,
             completion: completion
         )

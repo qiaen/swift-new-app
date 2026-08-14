@@ -54,7 +54,7 @@ class DiscoverService {
         let request = DiscoverRequest(eventStatus: eventStatus)
         network.get(
             path: NetworkConstants.APIPath.discoverList,
-            parameters: request.toDictionary(),
+            parameters: request,
             responseType: DiscoverData.self,
             completion: completion
         )
@@ -80,14 +80,9 @@ class DiscoverService {
         pageSize: Int = 100,
         completion: @escaping (Result<BaseResponse<MaterialsData>, NetworkError>) -> Void
     ) {
-        let parameters: [String: Any] = [
-            "eventId": eventId,
-            "pageNo": pageNo,
-            "pageSize": pageSize
-        ]
         network.get(
             path: NetworkConstants.APIPath.materials,
-            parameters: parameters,
+            parameters: MaterialsRequest(eventId: eventId, pageNo: pageNo, pageSize: pageSize),
             responseType: MaterialsData.self,
             completion: completion
         )

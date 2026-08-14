@@ -1,5 +1,19 @@
 import Foundation
 
+/// 全局复用的 JSON 编解码器，避免每次请求 new JSONDecoder()
+enum JSON {
+    static let decoder: JSONDecoder = {
+        let d = JSONDecoder()
+        // 后端时间格式统一后，可在这里配置 dateDecodingStrategy，
+        // 比每个 Model 手动转换更省事
+        return d
+    }()
+    static let encoder: JSONEncoder = {
+        let e = JSONEncoder()
+        return e
+    }()
+}
+
 class NetworkManager {
     static let shared = NetworkManager()
     private init() {
@@ -35,7 +49,6 @@ class NetworkManager {
     
     // MARK: - 公开方法
     func setAuthToken(_ token: String) {
-        print("token-----", token)
         self.authToken = token
     }
     
@@ -47,7 +60,7 @@ class NetworkManager {
     func request<T: Decodable>(
         method: HTTPMethod,
         path: String,
-        parameters: [String: Any]? = nil,
+        parameters: Encodable? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
         completion: @escaping (Result<BaseResponse<T>, NetworkError>) -> Void
@@ -68,23 +81,24 @@ class NetworkManager {
         }
         allHeaders.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
-        // 处理参数
+        // 处理参数：Encodable 模型统一编码，GET/DELETE 拼 query，其余放 body
         if let parameters = parameters {
-            if method == .get || method == .delete {
-                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-                components?.queryItems = parameters.map { key, value in
-                    URLQueryItem(name: key, value: "\(value)")
+            do {
+                if method == .get || method == .delete {
+                    let dict = try parameters.asDictionary()
+                    var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                    components?.queryItems = dict.map { key, value in
+                        URLQueryItem(name: key, value: "\(value)")
+                    }
+                    if let newURL = components?.url {
+                        request.url = newURL
+                    }
+                } else {
+                    request.httpBody = try JSON.encoder.encode(parameters)
                 }
-                if let newURL = components?.url {
-                    request.url = newURL
-                }
-            } else {
-                do {
-                    request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-                } catch {
-                    completion(.failure(.encodingError))
-                    return
-                }
+            } catch {
+                completion(.failure(.encodingError))
+                return
             }
         }
         
@@ -128,10 +142,15 @@ class NetworkManager {
             }
             
             do {
-                let decoder = JSONDecoder()
-                let baseResponse = try decoder.decode(BaseResponse<T>.self, from: data)
+                let baseResponse = try JSON.decoder.decode(BaseResponse<T>.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(baseResponse))
+                    if baseResponse.result {
+                        completion(.success(baseResponse))
+                    } else {
+                        // 业务失败统一走 failure，UI 无需每页重复判断 result
+                        let message = baseResponse.message.isEmpty ? "请求失败" : baseResponse.message
+                        completion(.failure(.businessError(message)))
+                    }
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -148,7 +167,7 @@ class NetworkManager {
 extension NetworkManager {
     func get<T: Decodable>(
         path: String,
-        parameters: [String: Any]? = nil,
+        parameters: Encodable? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
         completion: @escaping (Result<BaseResponse<T>, NetworkError>) -> Void
@@ -158,7 +177,7 @@ extension NetworkManager {
     
     func post<T: Decodable>(
         path: String,
-        parameters: [String: Any]? = nil,
+        parameters: Encodable? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
         completion: @escaping (Result<BaseResponse<T>, NetworkError>) -> Void
@@ -168,7 +187,7 @@ extension NetworkManager {
     
     func put<T: Decodable>(
         path: String,
-        parameters: [String: Any]? = nil,
+        parameters: Encodable? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
         completion: @escaping (Result<BaseResponse<T>, NetworkError>) -> Void
@@ -178,7 +197,7 @@ extension NetworkManager {
     
     func delete<T: Decodable>(
         path: String,
-        parameters: [String: Any]? = nil,
+        parameters: Encodable? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
         completion: @escaping (Result<BaseResponse<T>, NetworkError>) -> Void

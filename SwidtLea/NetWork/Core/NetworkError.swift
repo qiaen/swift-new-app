@@ -9,6 +9,7 @@ enum NetworkError: Error {
     case httpError(Int)
     case noData
     case unauthorized
+    case businessError(String)
     case custom(String)
     
     var localizedDescription: String {
@@ -29,6 +30,8 @@ enum NetworkError: Error {
             return "没有数据返回"
         case .unauthorized:
             return "未授权，请重新登录"
+        case .businessError(let message):
+            return message.isEmpty ? "请求失败" : message
         case .custom(let message):
             return message
         }
