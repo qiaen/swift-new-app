@@ -46,9 +46,9 @@ class DiscoverService {
     
     private init() {}
     
-    // 登录
+    // 获取活动列表，eventStatus 传 nil 表示不区分活动状态
     func getDiscoverList(
-        eventStatus: EventStatus,
+        eventStatus: EventStatus? = nil,
         completion: @escaping (Result<BaseResponse<DiscoverData>, NetworkError>) -> Void
     ) {
         let request = DiscoverRequest(eventStatus: eventStatus)
