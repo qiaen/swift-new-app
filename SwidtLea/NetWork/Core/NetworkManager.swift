@@ -2,7 +2,13 @@ import Foundation
 
 class NetworkManager {
     static let shared = NetworkManager()
-    private init() {}
+    private init() {
+        // 初始化时从本地读取 Token
+        if let token = StorageDefault.shared.getToken() {
+            self.authToken = token
+            print("✅ 从本地恢复 Token: \(token.prefix(20))...")
+        }
+    }
     
     private let baseURL = NetworkConstants.baseURL
     private let timeout = NetworkConstants.timeout
@@ -14,13 +20,14 @@ class NetworkManager {
     // Token 管理
     private var authToken: String? {
         get {
-            UserDefaults.standard.string(forKey: "auth_token")
+            return StorageDefault.shared.getToken()
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: "auth_token")
             if let token = newValue {
+                StorageDefault.shared.saveToken(token)
                 headers[NetworkConstants.Headers.authorization] = "Bearer \(token)"
             } else {
+                StorageDefault.shared.deleteToken()
                 headers.removeValue(forKey: NetworkConstants.Headers.authorization)
             }
         }
