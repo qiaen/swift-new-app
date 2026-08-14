@@ -60,4 +60,37 @@ class DiscoverService {
         )
     }
     
+    // 获取活动详情
+    func getEventDetail(
+        eventId: String,
+        completion: @escaping (Result<BaseResponse<EventDetailData>, NetworkError>) -> Void
+    ) {
+        network.get(
+            path: NetworkConstants.APIPath.eventDetail(eventId: eventId),
+            parameters: nil,
+            responseType: EventDetailData.self,
+            completion: completion
+        )
+    }
+    
+    // 获取活动素材列表
+    func getMaterials(
+        eventId: String,
+        pageNo: Int = 1,
+        pageSize: Int = 100,
+        completion: @escaping (Result<BaseResponse<MaterialsData>, NetworkError>) -> Void
+    ) {
+        let parameters: [String: Any] = [
+            "eventId": eventId,
+            "pageNo": pageNo,
+            "pageSize": pageSize
+        ]
+        network.get(
+            path: NetworkConstants.APIPath.materials,
+            parameters: parameters,
+            responseType: MaterialsData.self,
+            completion: completion
+        )
+    }
+    
 }

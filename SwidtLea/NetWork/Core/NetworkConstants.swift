@@ -44,6 +44,12 @@ struct NetworkConstants {
         
         // DIscover相关
         static let discoverList = "/api/koc/events"
+        static let materials = "/api/koc/materials"
+        
+        // 活动详情
+        static func eventDetail(eventId: String) -> String {
+            return "/api/koc/events/\(eventId)"
+        }
     }
     
     // 状态码

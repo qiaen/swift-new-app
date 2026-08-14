@@ -18,6 +18,10 @@ struct Discover: View {
             List {
                 ForEach(items) { item in
                     DiscoverCard(item: item)
+                        .contentShape(RoundedRectangle(cornerRadius: 12))
+                        .onTapGesture {
+                            router.push(.eventDetail(eventId: item.id))
+                        }
                         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                         .listRowSeparator(.hidden)
                 }

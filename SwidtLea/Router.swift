@@ -11,6 +11,7 @@ enum Route: Hashable {
     case zst(userId: Int)
     case profile
     case login
+    case eventDetail(eventId: String)
 }
 
 class Router: ObservableObject {
@@ -40,6 +41,8 @@ class Router: ObservableObject {
             EmptyView()
         case .login:
             Login()
+        case .eventDetail(let eventId):
+            DiscoverDetailView(eventId: eventId)
         }
     }
 }
