@@ -40,7 +40,7 @@ actor SignedURLCache {
     @discardableResult
     func store(signedURL: String) -> String {
         guard let url = URL(string: signedURL),
-              var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return signedURL
         }
         

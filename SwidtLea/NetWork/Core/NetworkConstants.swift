@@ -50,6 +50,10 @@ struct NetworkConstants {
         static func eventDetail(eventId: String) -> String {
             return "/api/koc/events/\(eventId)"
         }
+        
+        // 首页 Dashboard
+        static let dashboardOverview = "/api/koc/user/me/overview"
+        static let myRewards = "/api/koc/rewards/my/list"
     }
     
     // 状态码

@@ -102,15 +102,15 @@ struct DiscoverCard: View {
                     }
                 }
                 
-                // 活动时间
+                // 活动时间（UTC → 本地）
                 HStack(spacing: 4) {
-                    Text(item.startAt)
+                    Text(item.startAt.toLocalTimeString())
                         .font(.system(size: 13))
                         .foregroundStyle(.secondary)
                     Image(systemName: "arrow.right")
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
-                    Text(item.endAt)
+                    Text(item.endAt.toLocalTimeString())
                         .font(.system(size: 13))
                         .foregroundStyle(.secondary)
                 }
