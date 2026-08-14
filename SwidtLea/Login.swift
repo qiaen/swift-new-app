@@ -102,6 +102,8 @@ struct CheckboxToggleStyle: ToggleStyle {
 
 
 struct Login: View {
+    @EnvironmentObject var router: Router
+    
     @State private var username = "liuholy@126.com"
     @State private var password = ""
     @State private var agree = false
@@ -109,39 +111,34 @@ struct Login: View {
     
     @State private var errorMessage: String?
     var body: some View {
-        NavigationStack {
+        VStack(spacing: 25) {
+            Text("Hello, ")
+                .font(.largeTitle)
+            + Text("Player")
+                .font(.largeTitle)
+                .foregroundStyle(.blue)
             
-            VStack(spacing: 25) {
-                Text("Hello, ")
-                    .font(.largeTitle)
-                + Text("Player")
-                    .font(.largeTitle)
-                    .foregroundStyle(.blue)
+            QnInput(placeholder: "请输入邮箱", text: $username)
+                .padding(.top)
+            QnInput(placeholder: "请输入密码", text: $password)
+            HStack {
+                Toggle(isOn: $agree) {
+                    Text("同意使用协议")
+                }
+                .toggleStyle(CheckboxToggleStyle())
+                .padding(.leading)
+                .padding(.bottom, -10)
                 
-                QnInput(placeholder: "请输入邮箱", text: $username)
-                    .padding(.top)
-                QnInput(placeholder: "请输入密码", text: $password)
-                HStack {
-                    Toggle(isOn: $agree) {
-                        Text("同意使用协议")
-                    }
-                    .toggleStyle(CheckboxToggleStyle())
-                    .padding(.leading)
-                    .padding(.bottom, -10)
-                    
-                    Spacer()
-                }
-                QnButton(iconName: "paperplane", title: "登录", loading:loading, type: .primary, cornerRadius: 48) {
-                    submitLogin()
-                }
-                QnButton(iconName: "paperplane", title: "获取用户信息", type: .primary, cornerRadius: 48) {
-                    fetchUser()
-                }
+                Spacer()
             }
-            .padding()
-            .navigationTitle("Login")
+            QnButton(iconName: "paperplane", title: "登录", loading:loading, type: .primary, cornerRadius: 48) {
+                submitLogin()
+            }
+            QnButton(iconName: "paperplane", title: "获取用户信息", type: .primary, cornerRadius: 48) {
+                fetchUser()
+            }
         }
-        
+        .padding()
     }
     private func submitLogin() {
         loading = true
@@ -149,6 +146,7 @@ struct Login: View {
         AuthService.shared.login(username: "bGl1aG9seUAxMjYuY29t", password: "QWNlb24xMjM0NQ==") { result in
             loading = false
             print("登录成功-------")
+            router.pop()
         }
         
     }

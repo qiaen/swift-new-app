@@ -6,6 +6,52 @@
 //
 
 import SwiftUI
+// 头像卡片区域
+struct ProfileBox:View {
+    var body: some View {
+        HStack(spacing: 16){
+            Image(systemName: "person.circle.fill")
+                .font(.system(size: 54))
+                .foregroundStyle(.blue)
+            VStack(alignment: .leading){
+                HStack(spacing: 10){
+                    Text("TEEMO")
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(.baseGreen)
+                    
+                    Text("Leve.2")
+                        .foregroundStyle(.black)
+                        .bold()
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 2)
+                        .background(Capsule().fill(.baseGreen))
+                }
+                
+                HStack(spacing: 6){
+                    Image(systemName: "mappin.and.ellipse")
+                        .font(.caption)
+                        .foregroundStyle(.black)
+                    Text("China")
+                    Text("·")
+                    Text("Stream")
+                        .foregroundStyle(.baseGreen)
+                    
+                }
+                .foregroundStyle(.black)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .frame(height: 100)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+            .fill(.white)
+            .shadow(color: .bgLightGray, radius: 10)
+        )
+    }
+}
 struct BannerBox: View {
     @EnvironmentObject var router: Router
     let images = ["banner2", "banner3", "banner1"]
@@ -60,27 +106,37 @@ struct HomePage: View {
         NavigationStack(path: $router.path) {
             ScrollView {
                 if StorageDefault.shared.hasToken() {
-                    BannerBox()
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .shadow(radius: 10)
-                        .padding()
+                    VStack(spacing: 16){
+                        BannerBox()
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+//                            .shadow(radius: 10)
+                            
+                        ProfileBox()
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom)
                 } else {
-                    NotLoginPage(pageTitle: "Home")
+                    HStack{
+                        NotLoginPage(pageTitle: "Home")
+                    }
+                    .padding(.top, 150)
                 }
             }
+            .background(.bgLightGray)
             .navigationDestination(for: Route.self) { route in
                 // 重点：导航目标由它生成
                 RouterDestinationView(route: route)
             }
             .navigationTitle("Home")
             .toolbar {
-                        ToolbarItem() {
-                            Button("完成") {
-                                
-                            }
-                        }
-                    }
+//                ToolbarItem() {
+//                    Button("完成") {
+//                        
+//                    }
+//                }
+            }
         }
+        
     }
 }
 

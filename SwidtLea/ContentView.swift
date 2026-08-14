@@ -19,7 +19,7 @@ enum MainTab: String, CaseIterable {
     var view: some View {
         switch self {
         case .home: HomePage()
-        case .discover: HomePage()
+        case .discover: Discover()
         case .materials: HomePage()
         case .mine: HomePage()
         }

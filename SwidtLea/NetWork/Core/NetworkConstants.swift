@@ -2,7 +2,7 @@ import Foundation
 
 struct NetworkConstants {
     // 基础 URL
-    static let baseURL = ""
+    static let baseURL = "http://192.168.110.241:8087/js"
     
     // 超时时间
     static let timeout: TimeInterval = 30

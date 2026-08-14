@@ -20,7 +20,7 @@ struct NotLoginPage: View {
             QnButton(title: "去登录", type: .primary) {
                 router.push(.login)
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 80)
         }
         .padding()
             
