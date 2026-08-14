@@ -24,7 +24,8 @@ struct CachedAsyncImage<Placeholder: View>: View {
                 placeholder()
             }
         }
-        .task(id: urlString) {
+        // 用原始路径（去掉签名参数）作为 id，签名变化不会触发重复加载
+        .task(id: SignedURLCache.originalKey(of: urlString)) {
             await loader.load(urlString: urlString)
         }
     }
