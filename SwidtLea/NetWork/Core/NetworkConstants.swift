@@ -42,7 +42,8 @@ struct NetworkConstants {
         static let videoDetail = "/api/koc/video/detail"
         static let videoUpload = "/api/koc/video/upload"
         
-        // 添加更多...
+        // DIscover相关
+        static let discoverList = "/api/koc/events"
     }
     
     // 状态码

@@ -10,7 +10,7 @@ import SwiftUI
 struct Discover: View {
     @EnvironmentObject var router: Router
     
-    @State private var items: [Item] = []
+    @State private var items: [DiscoverItem] = []
     @State private var isFirstLoad = true
     
     var body: some View {
@@ -20,11 +20,9 @@ struct Discover: View {
                 ForEach(items) { item in
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(item.title).font(.headline)
-                            Text(item.subtitle).font(.subheadline).foregroundStyle(.secondary)
+                            Text(item.name).font(.headline)
+                            Text(item.startAt).font(.subheadline).foregroundStyle(.secondary)
                         }
-                        Spacer()
-                        Image(systemName: "bell.fill").foregroundStyle(.tint)
                     }
                     .padding(.vertical, 4)
                 }
@@ -56,11 +54,21 @@ struct Discover: View {
         
     }
     private func fetchData() async {
-        // 模拟请求，替换成真实接口调用即可
-        try? await Task.sleep(nanoseconds: 1_200_000_000)
-        let time = Date.now.formatted(date: .omitted, time: .standard)
-        items = (1...15).map { Item(title: "第 \($0) 条通知", subtitle: "更新时间 \(time)") }
-        isFirstLoad = false
+        // 使用 Service
+        DiscoverService.shared.getDiscoverList(eventStatus: .Active) { result in
+            isFirstLoad = false
+
+            switch result {
+            case .success(let response):
+                if response.result, let data = response.data {
+                    items = data.list
+                } else {
+                    
+                }
+            case .failure(let error):
+                print("")
+            }
+        }
     }
 
     private struct Item: Identifiable {
