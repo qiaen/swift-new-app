@@ -23,6 +23,7 @@ struct Discover: View {
                 }
             }
             .listStyle(.plain)
+            .contentMargins(.bottom, 16, for: .scrollContent)
             .refreshable {
                 await fetchData()
             }
@@ -37,7 +38,6 @@ struct Discover: View {
                     )
                 }
             }
-            .padding(.bottom)
             .navigationTitle("Discover")
             .task {
                 await fetchData()
