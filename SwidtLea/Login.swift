@@ -134,9 +134,9 @@ struct Login: View {
             QnButton(iconName: "paperplane", title: "登录", loading:loading, type: .primary, cornerRadius: 48) {
                 submitLogin()
             }
-            QnButton(iconName: "paperplane", title: "获取用户信息", type: .primary, cornerRadius: 48) {
-                fetchUser()
-            }
+//            QnButton(iconName: "paperplane", title: "获取用户信息", type: .primary, cornerRadius: 48) {
+//                fetchUser()
+//            }
         }
         .padding()
     }

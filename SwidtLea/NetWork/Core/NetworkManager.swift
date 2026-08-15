@@ -124,6 +124,10 @@ class NetworkManager {
             guard (200...299).contains(httpResponse.statusCode) else {
                 if httpResponse.statusCode == 401 {
                     DispatchQueue.main.async {
+                        // 先清除本地token
+                        //NetworkManager.shared.clearAuthToken()
+                        // 发送401全局通知
+                        NotificationCenter.default.post(name: .networkUnauthorized, object: nil)
                         completion(.failure(.unauthorized))
                     }
                 } else {

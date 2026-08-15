@@ -27,7 +27,7 @@ struct HomePage: View {
                     VStack(spacing: 16) {
                         // 1. 活动轮播
                         HomeBannerCarousel(events: events)
-                            .environmentObject(router)
+//                            .environmentObject(router)
                         
                         // 2. 素材
                         HomeMaterialsSection(materials: materials, isLoading: isLoading)
@@ -64,6 +64,10 @@ struct HomePage: View {
                 await loadData()
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .networkUnauthorized)) { _ in
+                router.popRoot()
+                router.push(.login)
+            }
     }
     
     private func loadData() async {

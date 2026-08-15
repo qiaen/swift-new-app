@@ -27,3 +27,8 @@ extension Color {
         )
     }
 }
+
+// 定义 401 网络通知
+extension Notification.Name {
+    static let networkUnauthorized = Notification.Name("networkUnauthorized")
+}
